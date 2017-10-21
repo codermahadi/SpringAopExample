@@ -12,11 +12,19 @@ import org.springframework.stereotype.Component;
 @Component
 public class Logger {
 
-    @Pointcut("execution(void com.mahadi.spring.aop.Camera.snap())")
+    @Pointcut("execution(* com.mahadi.spring.aop.Camera.*(..))")
     public void cameraSnap(){}
 
         @Before("cameraSnap()")
         public void aboutToTakePhoto(){
             System.out.println("About To Take photo...");
         }
+
+    @Pointcut("execution(* *.*(..))")
+    public void cameraActivity(){}
+
+    @Before("cameraActivity()")
+    public void cameraRelatedActivity(){
+        System.out.println("Doing something related to cameras...");
+    }
 }
