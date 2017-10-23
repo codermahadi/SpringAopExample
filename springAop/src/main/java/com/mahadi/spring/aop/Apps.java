@@ -13,15 +13,13 @@ public class Apps {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
 
         Camera camera = (Camera) context.getBean("camera");
-        Lens lens     = (Lens) context.getBean("lens");
+        Car car= (Car) context.getBean("car");
 
+        car.start();
 
-        try{
-            camera.snap();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        lens.zoom(500);
+        camera.snap();
+        camera.snap(1);
+        camera.snap("Mahadi");
         context.close();
     }
 }

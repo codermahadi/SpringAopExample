@@ -1,6 +1,5 @@
 package com.mahadi.spring.aop;
 
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
@@ -11,40 +10,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class Logger {
 
-    @Pointcut("execution(* com.mahadi.spring.aop.Camera.*(..))")
-    public void cameraSnap(){}
+    @Pointcut("within( com.mahadi.spring.aop.*)")
+    public void withinDemo(){}
 
-        @Before("cameraSnap()")
-        public void aboutToTakePhoto(){
-            System.out.println("About To Take photo...");
+    @Pointcut("target(com.mahadi.spring.aop.Camera)")
+    public void targetDemo(){}
+
+        @Before("withinDemo()")
+        public void withinDemoBefore(){
+            System.out.println("****** WITHIN DEMO *****");
         }
 
-        @After("cameraSnap()")
-        public void afterAdvice(){
-            System.out.println("After Advice..");
-        }
+        @Before("targetDemo()")
+        public void targetDemoBefore(){
+            System.out.println("****** TARGET DEMO *****");
 
-        @AfterReturning("cameraSnap()")
-        public void afterReturning(){
-            System.out.println("After Returning advice");
-        }
-
-        @AfterThrowing("cameraSnap()")
-        public void afterThrow(){
-            System.out.println("After throw advice");
-
-        }
-
-        @Around("cameraSnap()")
-        public void aroundAdvice(ProceedingJoinPoint point){
-            System.out.println("Around advice...(before)");
-
-            try{
-                point.proceed();
-            }catch (Throwable throwable){
-                System.out.println("In around device " + throwable.getMessage());
-            }
-            System.out.println("Around advice...(after)");
         }
 
 
