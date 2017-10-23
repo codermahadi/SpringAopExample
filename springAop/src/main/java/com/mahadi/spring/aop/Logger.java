@@ -1,8 +1,7 @@
 package com.mahadi.spring.aop;
 
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,11 +19,33 @@ public class Logger {
             System.out.println("About To Take photo...");
         }
 
-    @Pointcut("execution(* *.*(..))")
-    public void cameraActivity(){}
+        @After("cameraSnap()")
+        public void afterAdvice(){
+            System.out.println("After Advice..");
+        }
 
-    @Before("cameraActivity()")
-    public void cameraRelatedActivity(){
-        System.out.println("Doing something related to cameras...");
-    }
+        @AfterReturning("cameraSnap()")
+        public void afterReturning(){
+            System.out.println("After Returning advice");
+        }
+
+        @AfterThrowing("cameraSnap()")
+        public void afterThrow(){
+            System.out.println("After throw advice");
+
+        }
+
+        @Around("cameraSnap()")
+        public void aroundAdvice(ProceedingJoinPoint point){
+            System.out.println("Around advice...(before)");
+
+            try{
+                point.proceed();
+            }catch (Throwable throwable){
+                System.out.println("In around device " + throwable.getMessage());
+            }
+            System.out.println("Around advice...(after)");
+        }
+
+
 }

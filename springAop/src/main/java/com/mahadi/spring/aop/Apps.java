@@ -15,10 +15,12 @@ public class Apps {
         Camera camera = (Camera) context.getBean("camera");
         Lens lens     = (Lens) context.getBean("lens");
 
-        camera.snap();
-        camera.snap(1200);
-        camera.snap("Mahadi");
-        camera.nightSnap();
+
+        try{
+            camera.snap();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         lens.zoom(500);
         context.close();
     }
